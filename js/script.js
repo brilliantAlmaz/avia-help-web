@@ -353,8 +353,6 @@ function init() {
    // отступ слева в меню как у контейнера
    document.querySelector('.header__info').style.paddingLeft = window.getComputedStyle(document.querySelector('.container  '), null).getPropertyValue('padding-left');
 
-   document.querySelector('.header__info').style.paddingTop = document.querySelector('#header').clientHeight + 16 + 'px';
-
 }
 
 
