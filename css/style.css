@@ -1886,7 +1886,6 @@ h2 {
 .soc:hover svg path:first-child {
    fill: var(--dark-color);
 }
-/*
 @media (max-width: 1832px) {
    .last__background {
       height: 170%;
@@ -3421,4 +3420,4 @@ h2 {
 }
 input {
    text-align: left !important;
-} */
+}
