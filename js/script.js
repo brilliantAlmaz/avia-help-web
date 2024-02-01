@@ -13,7 +13,7 @@ const header = document.querySelector('header');
 
 // функция для того, чтобы при скроле менялся цвет хедера
 function windowScrollHeader() {
-   if (window.pageYOffset > 100) {
+   if (window.pageYOffset > 0) {
       header.style.background = 'var(--dark-color)';
    }
    else {
@@ -437,4 +437,44 @@ function init() {
 //    }
 // })
 
+
+// lazy-loading
+const lazyImages = document.querySelectorAll('img[data-src],source[data-srcset]');
+const windowHeight = document.documentElement.clientHeight;
+
+let lazyImagesPositions = [];
+if (lazyImages.length > 0) {
+   lazyImages.forEach(img => {
+      if (img.dataset.src || img.dataset.srcset) {
+         lazyImagesPositions.push(img.getBoundingClientRect().top + pageYOffset);
+         lazyScrollCheck();
+      }
+   })
+}
+
+function lazyScrollCheck() {
+   let imgIndex = lazyImagesPositions.findIndex(
+      item => pageYOffset > item - windowHeight
+   );
+   if (imgIndex >= 0) {
+      if (lazyImages[imgIndex].dataset.src) {
+         lazyImages[imgIndex].src = lazyImages[imgIndex].dataset.src;
+         lazyImages[imgIndex].removeAttribute('data-src');
+
+      }
+      else if (lazyImages[imgIndex].dataset.datasrc) {
+         lazyImages[imgIndex].srcset = lazyImages[imgIndex].dataset.srcset;
+         lazyImages[imgIndex].removeAttribute('data-srcset');
+
+      }
+      delete lazyImagesPositions[imgIndex];
+   }
+}
+
+function lazyScroll() {
+   if (document.querySelectorAll('img[data-src],source[data-srcset]').length > 0)
+      lazyScrollCheck();
+}
+
+window.addEventListener('scroll', lazyScroll)
 
